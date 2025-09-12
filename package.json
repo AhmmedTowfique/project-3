@@ -1,0 +1,15 @@
+{
+  "name": "restauranty-root",
+  "private": true,
+  "scripts": {
+    "start:auth": "cd backend/auth && npm start",
+    "start:discounts": "cd backend/discounts && npm start",
+    "start:items": "cd backend/items && npm start",
+    "start:client": "cd client && npm start",
+    "start:haproxy": "sudo haproxy -f haproxy.cfg",
+    "start:all": "concurrently -k -n auth,discounts,items,client,haproxy -c green,blue,magenta,yellow,red \"npm run start:auth\" \"npm run start:discounts\" \"npm run start:items\" \"npm run start:client\" \"npm run start:haproxy\""
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
