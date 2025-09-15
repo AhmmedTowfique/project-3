@@ -29,7 +29,7 @@ jobs:
       - name: Build backend images
         run: |
           docker buildx build --builder mybuilder --load -t towfiqueahmmed/restauranty-auth:${{ github.sha }} ./backend/auth
-          docker buildx build --builder mybuilder --load -t towfiqueahmmed/restauranty-discount:${{ github.sha }} ./backend/discounts
+          docker buildx build --builder mybuilder --load -t towfiqueahmmed/restauranty-discounts:${{ github.sha }} ./backend/discounts
           docker buildx build --builder mybuilder --load -t towfiqueahmmed/restauranty-items:${{ github.sha }} ./backend/items
 
       - name: Build frontend image
@@ -73,6 +73,6 @@ jobs:
       - name: Deploy images to AKS
         run: |
           kubectl set image deployment/auth-deployment auth=towfiqueahmmed/restauranty-auth:${{ github.sha }}
-          kubectl set image deployment/discounts-deployment discounts=towfiqueahmmed/restauranty-discount:${{ github.sha }}
+          kubectl set image deployment/discounts-deployment discounts=towfiqueahmmed/restauranty-discounts:${{ github.sha }}
           kubectl set image deployment/items-deployment items=towfiqueahmmed/restauranty-items:${{ github.sha }}
           kubectl set image deployment/client-deployment client=towfiqueahmmed/restauranty-client:${{ github.sha }}
