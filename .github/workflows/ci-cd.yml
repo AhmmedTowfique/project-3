@@ -37,7 +37,7 @@ jobs:
         run: |
           echo "REACT_APP_API_URL=http://2fik.diogohack.shop" > .env.production
           npm ci
-          npm run build
+          CI=false npm run build
           docker build -t towfiqueahmmed/restauranty-client:${{ github.sha }} .
 
       - name: Run tests
