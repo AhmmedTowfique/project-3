@@ -21,9 +21,9 @@ jobs:
 
       - name: Build images
         run: |
-          docker build -t towfiqueahmmed/restauranty-auth:${{ github.sha }} ./auth
-          docker build -t towfiqueahmmed/restauranty-discount:${{ github.sha }} ./discounts
-          docker build -t towfiqueahmmed/restauranty-items:${{ github.sha }} ./items
+          docker build -t towfiqueahmmed/restauranty-auth:${{ github.sha }} ./backend/auth
+          docker build -t towfiqueahmmed/restauranty-discount:${{ github.sha }} ./backend/discounts
+          docker build -t towfiqueahmmed/restauranty-items:${{ github.sha }} ./backend/items
           docker build -t towfiqueahmmed/restauranty-client:${{ github.sha }} ./client
 
       - name: Run tests
