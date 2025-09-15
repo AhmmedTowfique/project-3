@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: items
-        image: towfiqueahmmed/restauranty-items:v1.0.0
+        image: towfiqueahmmed/restauranty-items:v1.0.1
         ports:
         - containerPort: 3003
         env:

@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: auth
-        image: towfiqueahmmed/restauranty-auth:v1.0.0
+        image: towfiqueahmmed/restauranty-auth:v1.0.1
         ports:
         - containerPort: 3001
         env:
