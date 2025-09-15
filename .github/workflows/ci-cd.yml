@@ -43,14 +43,17 @@ jobs:
       - name: Run tests
         run: |
           echo "Run your tests here"
-
+          
+      - name: Verify images
+        run: docker images
+        
       - name: Push images
         run: |
-          docker push towfiqueahmmed/restauranty-auth:${{ github.sha }}
-          docker push towfiqueahmmed/restauranty-discount:${{ github.sha }}
-          docker push towfiqueahmmed/restauranty-items:${{ github.sha }}
-          docker push towfiqueahmmed/restauranty-client:${{ github.sha }}
-
+          for img in auth discounts items client; do
+            docker tag towfiqueahmmed/restauranty-$img:${{ github.sha }} towfiqueahmmed/restauranty-$img:${{ github.sha }}
+            docker push towfiqueahmmed/restauranty-$img:${{ github.sha }}
+          done
+          
   deploy:
     runs-on: ubuntu-latest
     needs: build-and-test
