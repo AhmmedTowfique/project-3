@@ -1,0 +1,45 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: discounts-deployment
+  labels:
+    app: discounts
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: discounts
+  template:
+    metadata:
+      labels:
+        app: discounts
+    spec:
+      containers:
+      - name: discounts
+        image: towfiqueahmmed/restauranty-discount:v1.0.0
+        ports:
+        - containerPort: 3002
+        env:
+        - name: SECRET
+          value: "MySecret1!"
+        - name: MONGODB_URI
+          value: "mongodb://mongo:27017/resturanty"
+        - name: PORT
+          value: "3002"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: discounts-service
+  labels:
+    app: discounts
+spec:
+  selector:
+    app: discounts
+  ports:
+    - protocol: TCP
+      port: 3002
+      targetPort: 3002
+  type: ClusterIP

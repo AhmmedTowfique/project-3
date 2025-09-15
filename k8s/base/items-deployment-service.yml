@@ -1,0 +1,51 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: items-deployment
+  labels:
+    app: items
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: items
+  template:
+    metadata:
+      labels:
+        app: items
+    spec:
+      containers:
+      - name: items
+        image: towfiqueahmmed/restauranty-items:v1.0.0
+        ports:
+        - containerPort: 3003
+        env:
+        - name: SECRET
+          value: MySecret1!
+        - name: MONGODB_URI
+          value: mongodb://mongo:27017/resturanty
+        - name: CLOUD_NAME
+          value: denshwowr
+        - name: CLOUD_API_KEY
+          value: "312199479246461"
+        - name: CLOUD_API_SECRET
+          value: q2CZfcTldvsablkyZUPTLEZuNSo
+        - name: PORT
+          value: "3003"
+          
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: items-service
+  labels:
+    app: items
+spec:
+  selector:
+    app: items
+  ports:
+    - protocol: TCP
+      port: 3003
+      targetPort: 3003
+  type: ClusterIP
