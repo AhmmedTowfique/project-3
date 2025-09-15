@@ -10,43 +10,35 @@ spec:
   - host: 2fik.diogohack.shop
     http:
       paths:
-      # Explicit /login route
-      - path: /login
-        pathType: Prefix
-        backend:
-          service:
-            name: auth-service
-            port:
-              number: 3001
-      # Auth routes
-      - path: /auth
-        pathType: Prefix
-        backend:
-          service:
-            name: auth-service
-            port:
-              number: 3001
-      # Discounts route
-      - path: /discounts
-        pathType: Prefix
-        backend:
-          service:
-            name: discounts-service
-            port:
-              number: 3002
-      # Items route
-      - path: /items
-        pathType: Prefix
-        backend:
-          service:
-            name: items-service
-            port:
-              number: 3003
-      # Catch-all route to frontend
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: client-service
-            port:
-              number: 80
+        # API paths — exact, no rewrite
+        - path: /api/auth
+          pathType: Prefix
+          backend:
+            service:
+              name: auth-service
+              port:
+                number: 3001
+        - path: /api/discounts
+          pathType: Prefix
+          backend:
+            service:
+              name: discounts-service
+              port:
+                number: 3002
+        - path: /api/items
+          pathType: Prefix
+          backend:
+            service:
+              name: items-service
+              port:
+                number: 3003
+        # SPA — catch-all for all other paths
+        - path: /(?!(api)/).*  # regex: everything except /api
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: client-service
+              port:
+                number: 80
+          # this path will be rewritten to / by nginx
+          nginx.ingress.kubernetes.io/rewrite-target: /
