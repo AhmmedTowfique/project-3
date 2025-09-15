@@ -28,9 +28,9 @@ jobs:
 
       - name: Build backend images
         run: |
-          docker build -t towfiqueahmmed/restauranty-auth:${{ github.sha }} ./backend/auth
-          docker build -t towfiqueahmmed/restauranty-discount:${{ github.sha }} ./backend/discounts
-          docker build -t towfiqueahmmed/restauranty-items:${{ github.sha }} ./backend/items
+          docker buildx build --builder mybuilder --load -t towfiqueahmmed/restauranty-auth:${{ github.sha }} ./backend/auth
+          docker buildx build --builder mybuilder --load -t towfiqueahmmed/restauranty-discount:${{ github.sha }} ./backend/discounts
+          docker buildx build --builder mybuilder --load -t towfiqueahmmed/restauranty-items:${{ github.sha }} ./backend/items
 
       - name: Build frontend image
         working-directory: ./client
@@ -38,22 +38,21 @@ jobs:
           echo "REACT_APP_API_URL=http://2fik.diogohack.shop" > .env.production
           npm ci
           CI=false npm run build
-          docker build -t towfiqueahmmed/restauranty-client:${{ github.sha }} .
+          docker buildx build --builder mybuilder --load -t towfiqueahmmed/restauranty-client:${{ github.sha }} .
 
       - name: Run tests
         run: |
           echo "Run your tests here"
-          
+
       - name: Verify images
         run: docker images
-        
+
       - name: Push images
         run: |
           for img in auth discounts items client; do
-            docker tag towfiqueahmmed/restauranty-$img:${{ github.sha }} towfiqueahmmed/restauranty-$img:${{ github.sha }}
             docker push towfiqueahmmed/restauranty-$img:${{ github.sha }}
           done
-          
+
   deploy:
     runs-on: ubuntu-latest
     needs: build-and-test
