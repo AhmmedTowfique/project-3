@@ -50,6 +50,7 @@ jobs:
 
     - name: Set up kubeconfig
       run: |
+        mkdir -p $HOME/.kube
         echo "${{ secrets.KUBECONFIG }}" | base64 --decode > $HOME/.kube/config
 
     - name: Deploy images to AKS
