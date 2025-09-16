@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: client
-        image: towfiqueahmmed/restauranty-client:v1.0.2
+        image: towfiqueahmmed/restauranty-client:v1.0.5
         ports:
         - containerPort: 80
         env:
@@ -45,3 +45,5 @@ spec:
       port: 80
       targetPort: 80
   type: ClusterIP
+
+  #--- IGNORE ---
