@@ -36,10 +36,10 @@ jobs:
         working-directory: ./client
         run: |
           cat <<-EOF > .env.production
-            REACT_APP_API_URL=http://2fik.diogohack.shop
-            REACT_APP_SERVER_AUTH_URL=http://auth.2fik.diogohack.shop
-            REACT_APP_SERVER_ITEMS_URL=http://items.2fik.diogohack.shop
-            REACT_APP_SERVER_DISCOUNTS_URL=http://discounts.2fik.diogohack.shop
+            REACT_APP_API_URL=https://2fik.diogohack.shop
+            REACT_APP_SERVER_AUTH_URL=https://auth.2fik.diogohack.shop
+            REACT_APP_SERVER_ITEMS_URL=https://items.2fik.diogohack.shop
+            REACT_APP_SERVER_DISCOUNTS_URL=https://discounts.2fik.diogohack.shop
           EOF
           npm ci
           CI=false npm run build
