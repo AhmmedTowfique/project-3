@@ -5,9 +5,17 @@ metadata:
   namespace: default
   annotations:
     kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
 spec:
+  tls:
+    - hosts:
+        - 2fik.diogohack.shop
+        - auth.2fik.diogohack.shop
+        - items.2fik.diogohack.shop
+        - discounts.2fik.diogohack.shop
+      secretName: restauranty-tls 
   rules:
-    # Auth API
     - host: auth.2fik.diogohack.shop
       http:
         paths:
@@ -18,8 +26,6 @@ spec:
                 name: auth-service
                 port:
                   number: 3001
-
-    # Items API
     - host: items.2fik.diogohack.shop
       http:
         paths:
@@ -30,8 +36,6 @@ spec:
                 name: items-service
                 port:
                   number: 3003
-
-    # Discounts API
     - host: discounts.2fik.diogohack.shop
       http:
         paths:
@@ -42,8 +46,6 @@ spec:
                 name: discounts-service
                 port:
                   number: 3002
-
-    # SPA catch-all
     - host: 2fik.diogohack.shop
       http:
         paths:
