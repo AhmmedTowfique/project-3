@@ -22,13 +22,13 @@ spec:
         - containerPort: 80
         env:
         - name: REACT_APP_API_URL
-          value: "http://2fik.diogohack.shop"
+          value: http://2fik.diogohack.shop
         - name: REACT_APP_SERVER_AUTH_URL
-          value: "http://auth.2fik.diogohack.shop"
+          value: http://auth.2fik.diogohack.shop
         - name: REACT_APP_SERVER_ITEMS_URL
-          value: "http://items.2fik.diogohack.shop"
+          value: http://items.2fik.diogohack.shop
         - name: REACT_APP_SERVER_DISCOUNTS_URL
-          value: "http://discounts.2fik.diogohack.shop"
+          value: http://discounts.2fik.diogohack.shop
 
 ---
 apiVersion: v1
