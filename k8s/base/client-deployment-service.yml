@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: client
-          image: towfiqueahmmed/restauranty-client:v1.0.6   # updated version after rebuild
+          image: towfiqueahmmed/restauranty-client:v1.0.6
           ports:
             - containerPort: 80
           env:

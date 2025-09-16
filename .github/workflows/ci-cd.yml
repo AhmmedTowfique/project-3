@@ -75,9 +75,13 @@ jobs:
           mkdir -p $HOME/.kube
           echo "${{ secrets.KUBECONFIG }}" | base64 --decode > $HOME/.kube/config
 
-      - name: Deploy images to AKS
+      - name: Update Deployment images
         run: |
           kubectl set image deployment/auth-deployment auth=towfiqueahmmed/restauranty-auth:${{ github.sha }}
           kubectl set image deployment/discounts-deployment discounts=towfiqueahmmed/restauranty-discounts:${{ github.sha }}
           kubectl set image deployment/items-deployment items=towfiqueahmmed/restauranty-items:${{ github.sha }}
           kubectl set image deployment/client-deployment client=towfiqueahmmed/restauranty-client:${{ github.sha }}
+
+      - name: Apply Ingress
+        run: |
+          kubectl apply -f k8s/base/restauranty-ingress.yml
