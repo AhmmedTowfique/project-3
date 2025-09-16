@@ -35,7 +35,12 @@ jobs:
       - name: Build frontend image
         working-directory: ./client
         run: |
-          echo "REACT_APP_API_URL=http://2fik.diogohack.shop" > .env.production
+          cat <<EOF > .env.production
+            REACT_APP_API_URL=http://2fik.diogohack.shop
+            REACT_APP_SERVER_AUTH_URL=http://auth.2fik.diogohack.shop
+            REACT_APP_SERVER_ITEMS_URL=http://items.2fik.diogohack.shop
+            REACT_APP_SERVER_DISCOUNTS_URL=http://discounts.2fik.diogohack.shop
+          EOF
           npm ci
           CI=false npm run build
           docker buildx build --builder mybuilder --load -t towfiqueahmmed/restauranty-client:${{ github.sha }} .
@@ -75,4 +80,3 @@ jobs:
           kubectl set image deployment/auth-deployment auth=towfiqueahmmed/restauranty-auth:${{ github.sha }}
           kubectl set image deployment/discounts-deployment discounts=towfiqueahmmed/restauranty-discounts:${{ github.sha }}
           kubectl set image deployment/items-deployment items=towfiqueahmmed/restauranty-items:${{ github.sha }}
-          kubectl set image deployment/client-deployment client=towfiqueahmmed/restauranty-client:${{ github.sha }}
