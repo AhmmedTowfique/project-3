@@ -2,7 +2,7 @@ function ProfilePage() {
   return (
     <div>
       <h1>Profile page</h1>
-      <p>its a CI/CD check 5</p>
+      <p>its a CI/CD check 6</p>
     </div>
   );
 }
