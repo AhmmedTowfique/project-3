@@ -5,39 +5,52 @@ metadata:
   namespace: default
   annotations:
     kubernetes.io/ingress.class: nginx
-    nginx.ingress.kubernetes.io/rewrite-target: /   # move here, applies to all paths unless overridden
 spec:
   rules:
-  - host: 2fik.diogohack.shop
-    http:
-      paths:
-        # API paths — exact, no rewrite
-        - path: /api/auth
-          pathType: Prefix
-          backend:
-            service:
-              name: auth-service
-              port:
-                number: 3001
-        - path: /api/discounts
-          pathType: Prefix
-          backend:
-            service:
-              name: discounts-service
-              port:
-                number: 3002
-        - path: /api/items
-          pathType: Prefix
-          backend:
-            service:
-              name: items-service
-              port:
-                number: 3003
-        # SPA — catch-all for all other paths
-        - path: /
-          pathType: Prefix
-          backend:
-            service:
-              name: client-service
-              port:
-                number: 80
+    # Auth API
+    - host: auth.2fik.diogohack.shop
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: auth-service
+                port:
+                  number: 3001
+
+    # Items API
+    - host: items.2fik.diogohack.shop
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: items-service
+                port:
+                  number: 3003
+
+    # Discounts API
+    - host: discounts.2fik.diogohack.shop
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: discounts-service
+                port:
+                  number: 3002
+
+    # SPA catch-all
+    - host: 2fik.diogohack.shop
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: client-service
+                port:
+                  number: 80
