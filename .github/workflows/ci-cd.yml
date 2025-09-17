@@ -78,22 +78,12 @@ jobs:
       # --- Apply MongoDB PVC first ---
       - name: Apply MongoDB PVC
         run: |
-          kubectl apply -f k8s/mongo/mongo-pvc.yml
-
-      # --- Apply MongoDB Deployment & Service ---
-      - name: Apply MongoDB Deployment & Service
-        run: |
-          kubectl apply -f k8s/mongo/mongo-deployment.yml
+          kubectl apply -f k8s/volume/mongo-pvc.yml
 
       # --- Apply backend & client Deployments ---
       - name: Apply Deployments
         run: |
-          kubectl apply -f k8s/deployments/
-
-      # --- Apply Services ---
-      - name: Apply Services
-        run: |
-          kubectl apply -f k8s/services/
+          kubectl apply -f k8s/base/
 
       # --- Update images for CI build ---
       - name: Update Deployment images
@@ -110,4 +100,4 @@ jobs:
 
       - name: Apply Ingress
         run: |
-          kubectl apply -f k8s/base/restauranty-ingress.yml
+          kubectl apply -f k8s/ingress/restauranty-ingress.yml
