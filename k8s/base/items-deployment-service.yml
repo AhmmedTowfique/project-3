@@ -20,7 +20,6 @@ spec:
         ports:
         - containerPort: 3003
         env:
-        # Sensitive values from Secret
         - name: SECRET
           valueFrom:
             secretKeyRef:
@@ -41,9 +40,8 @@ spec:
             secretKeyRef:
               name: shared-secrets
               key: CLOUD_API_SECRET
-        # Non-sensitive value from ConfigMap
         - name: MONGODB_URI
           valueFrom:
-            configMapKeyRef:
+            secretKeyRef:
               name: shared-config
               key: MONGODB_URI

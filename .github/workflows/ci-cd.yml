@@ -73,7 +73,6 @@ jobs:
       - name: Apply Secrets and ConfigMaps
         run: |
           kubectl apply -f k8s/secrets/sensitive-secret.yml
-          kubectl apply -f k8s/secrets/non-sensitive-secret.yml
 
       # --- Apply MongoDB PVC first ---
       - name: Apply MongoDB PVC
