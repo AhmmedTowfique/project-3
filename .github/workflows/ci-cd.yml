@@ -35,15 +35,9 @@ jobs:
       - name: Build frontend image
         working-directory: ./client
         run: |
-          cat <<-EOF > .env.production
-            REACT_APP_API_URL=https://2fik.diogohack.shop
-            REACT_APP_SERVER_AUTH_URL=https://auth.2fik.diogohack.shop
-            REACT_APP_SERVER_ITEMS_URL=https://items.2fik.diogohack.shop
-            REACT_APP_SERVER_DISCOUNTS_URL=https://discounts.2fik.diogohack.shop
-          EOF
           npm ci
           CI=false npm run build
-          docker buildx build --builder mybuilder --load -t towfiqueahmmed/restauranty-client:${{ github.sha }} .
+          docker buildx build --builder mybuilder --build-arg REACT_APP_SERVER_URL=https://2fik.diogohack.shop --load -t towfiqueahmmed/restauranty-client:${{ github.sha }} .
 
       - name: Run tests
         run: |

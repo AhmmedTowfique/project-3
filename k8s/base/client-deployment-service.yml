@@ -17,18 +17,12 @@ spec:
     spec:
       containers:
         - name: client
-          image: towfiqueahmmed/restauranty-client:v1.0.6
+          image: towfiqueahmmed/restauranty-client:v1.0.16
           ports:
             - containerPort: 80
           env:
-            - name: REACT_APP_API_URL
+            - name: REACT_APP_SERVER_URL
               value: "https://2fik.diogohack.shop"
-            - name: REACT_APP_SERVER_AUTH_URL
-              value: "https://auth.2fik.diogohack.shop"
-            - name: REACT_APP_SERVER_ITEMS_URL
-              value: "https://items.2fik.diogohack.shop"
-            - name: REACT_APP_SERVER_DISCOUNTS_URL
-              value: "https://discounts.2fik.diogohack.shop"
 
 ---
 apiVersion: v1
