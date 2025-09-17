@@ -26,6 +26,11 @@ spec:
             secretKeyRef:
               name: shared-secrets
               key: SECRET
+        - name: CLOUD_NAME
+          valueFrom:
+            secretKeyRef:
+              name: shared-secrets
+              key: CLOUD_NAME
         - name: CLOUD_API_KEY
           valueFrom:
             secretKeyRef:
