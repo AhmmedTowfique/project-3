@@ -76,6 +76,10 @@ jobs:
           kubectl set image deployment/items-deployment items=towfiqueahmmed/restauranty-items:${{ github.sha }}
           kubectl set image deployment/client-deployment client=towfiqueahmmed/restauranty-client:${{ github.sha }}
 
+      - name: Apply NetworkPolicy
+        run: |
+          kubectl apply -f k8s/policy/restauranty-networkpolicies.yml
+
       - name: Apply Ingress
         run: |
           kubectl apply -f k8s/base/restauranty-ingress.yml

@@ -1,0 +1,119 @@
+# -------------------------------
+# NetworkPolicy for Auth Service
+# -------------------------------
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: auth-allow-ingress
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      app: auth
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: ingress-nginx
+      ports:
+        - protocol: TCP
+          port: 3001
+
+---
+
+# -------------------------------
+# NetworkPolicy for Items Service
+# -------------------------------
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: items-allow-ingress
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      app: items
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: ingress-nginx
+      ports:
+        - protocol: TCP
+          port: 3003
+
+---
+
+# -------------------------------
+# NetworkPolicy for Discounts Service
+# -------------------------------
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: discounts-allow-ingress
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      app: discounts
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: ingress-nginx
+      ports:
+        - protocol: TCP
+          port: 3002
+
+---
+
+# -------------------------------
+# NetworkPolicy for MongoDB
+# -------------------------------
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: mongo-allow-backends
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      app: mongo
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app: auth
+        - podSelector:
+            matchLabels:
+              app: items
+        - podSelector:
+            matchLabels:
+              app: discounts
+      ports:
+        - protocol: TCP
+          port: 27017
+
+---
+
+# -------------------------------
+# Optional: Deny all egress by default
+# -------------------------------
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: deny-all-egress
+  namespace: default
+spec:
+  podSelector: {}
+  policyTypes:
+    - Egress
+  egress: []
