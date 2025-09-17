@@ -21,12 +21,18 @@ spec:
         ports:
         - containerPort: 3002
         env:
+        # Sensitive value from Secret
         - name: SECRET
-          value: "MySecret1!"
+          valueFrom:
+            secretKeyRef:
+              name: shared-secrets
+              key: SECRET
+        # Non-sensitive value from ConfigMap
         - name: MONGODB_URI
-          value: "mongodb://mongo:27017/resturanty"
-        - name: PORT
-          value: "3002"
+          valueFrom:
+            configMapKeyRef:
+              name: shared-config
+              key: MONGODB_URI
 
 ---
 apiVersion: v1

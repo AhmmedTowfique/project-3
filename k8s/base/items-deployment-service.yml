@@ -1,4 +1,3 @@
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -21,31 +20,25 @@ spec:
         ports:
         - containerPort: 3003
         env:
+        # Sensitive values from Secret
         - name: SECRET
-          value: MySecret1!
-        - name: MONGODB_URI
-          value: mongodb://mongo:27017/resturanty
-        - name: CLOUD_NAME
-          value: denshwowr
+          valueFrom:
+            secretKeyRef:
+              name: shared-secrets
+              key: SECRET
         - name: CLOUD_API_KEY
-          value: "312199479246461"
+          valueFrom:
+            secretKeyRef:
+              name: shared-secrets
+              key: CLOUD_API_KEY
         - name: CLOUD_API_SECRET
-          value: q2CZfcTldvsablkyZUPTLEZuNSo
-        - name: PORT
-          value: "3003"
-          
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: items-service
-  labels:
-    app: items
-spec:
-  selector:
-    app: items
-  ports:
-    - protocol: TCP
-      port: 3003
-      targetPort: 3003
-  type: ClusterIP
+          valueFrom:
+            secretKeyRef:
+              name: shared-secrets
+              key: CLOUD_API_SECRET
+        # Non-sensitive value from ConfigMap
+        - name: MONGODB_URI
+          valueFrom:
+            configMapKeyRef:
+              name: shared-config
+              key: MONGODB_URI

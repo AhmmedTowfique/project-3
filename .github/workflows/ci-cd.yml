@@ -69,6 +69,33 @@ jobs:
           mkdir -p $HOME/.kube
           echo "${{ secrets.KUBECONFIG }}" | base64 --decode > $HOME/.kube/config
 
+      # --- Apply Secrets and ConfigMaps first ---
+      - name: Apply Secrets and ConfigMaps
+        run: |
+          kubectl apply -f k8s/secrets/sensitive-secret.yml
+          kubectl apply -f k8s/secrets/non-sensitive-secret.yml
+
+      # --- Apply MongoDB PVC first ---
+      - name: Apply MongoDB PVC
+        run: |
+          kubectl apply -f k8s/mongo/mongo-pvc.yml
+
+      # --- Apply MongoDB Deployment & Service ---
+      - name: Apply MongoDB Deployment & Service
+        run: |
+          kubectl apply -f k8s/mongo/mongo-deployment.yml
+
+      # --- Apply backend & client Deployments ---
+      - name: Apply Deployments
+        run: |
+          kubectl apply -f k8s/deployments/
+
+      # --- Apply Services ---
+      - name: Apply Services
+        run: |
+          kubectl apply -f k8s/services/
+
+      # --- Update images for CI build ---
       - name: Update Deployment images
         run: |
           kubectl set image deployment/auth-deployment auth=towfiqueahmmed/restauranty-auth:${{ github.sha }}
@@ -76,6 +103,7 @@ jobs:
           kubectl set image deployment/items-deployment items=towfiqueahmmed/restauranty-items:${{ github.sha }}
           kubectl set image deployment/client-deployment client=towfiqueahmmed/restauranty-client:${{ github.sha }}
 
+      # --- Apply NetworkPolicy and Ingress ---
       - name: Apply NetworkPolicy
         run: |
           kubectl apply -f k8s/policy/restauranty-networkpolicies.yml
