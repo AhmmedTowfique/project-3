@@ -2,7 +2,6 @@ function ProfilePage() {
   return (
     <div>
       <h1>Profile page</h1>
-      <p>its a CI/CD check 11</p>
     </div>
   );
 }
