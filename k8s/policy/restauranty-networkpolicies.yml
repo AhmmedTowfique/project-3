@@ -14,7 +14,10 @@ spec:
     - Ingress
   ingress:
     - from:
-        - podSelector:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: ingress-nginx
+          podSelector:
             matchLabels:
               app.kubernetes.io/name: ingress-nginx
       ports:
@@ -39,7 +42,10 @@ spec:
     - Ingress
   ingress:
     - from:
-        - podSelector:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: ingress-nginx
+          podSelector:
             matchLabels:
               app.kubernetes.io/name: ingress-nginx
       ports:
@@ -64,7 +70,10 @@ spec:
     - Ingress
   ingress:
     - from:
-        - podSelector:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: ingress-nginx
+          podSelector:
             matchLabels:
               app.kubernetes.io/name: ingress-nginx
       ports:
