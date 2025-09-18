@@ -43,5 +43,5 @@ spec:
         - name: MONGODB_URI
           valueFrom:
             secretKeyRef:
-              name: shared-config
+              name: shared-secrets
               key: MONGODB_URI
